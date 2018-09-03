@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hello WebSocket</title>
+    <meta charset="utf-8">
+    <link href="/webjars/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+    <link href="main.css" rel="stylesheet">
+    <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/sockjs-client/1.1.4/sockjs.js"></script>
+    <script src="https://cdn.bootcss.com/stomp.js/2.2.0/stomp.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
+    enabled. Please enable
+    Javascript and reload this page!</h2></noscript>
+<div id="main-content" class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <h3>web 聊天室</h3>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="id" name="id" placeholder="输入用户名">
+                        <button id="connect" class="btn btn-default" type="submit">连接</button>
+                    </div>
+                    <button id="disconnect" class="btn btn-default" type="submit" disabled="disabled">断开
+                    </button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div style="padding: 20px 15px;margin-top: 15px; border: 1px solid #ccc;border-radius: 5px;box-shadow: 2px 2px 1px #ccc">
+                <table id="conversation" class="table table-striped" style="max-height: 400px;overflow-y: scroll;margin-bottom: 15px;">
+                    <thead>
+                    <tr>
+                        <th style="border: 0"><h3>聊天记录</h3></th>
+                    </tr>
+                    </thead>
+                    <tbody id="greetings">
+                    </tbody>
+                </table>
+                <form class="form-inline">
+                    <div class="form-group" style="width: 100%;">
+                    <textarea type="text" id="name" class="form-control" style="width: 100%"></textarea>
+                    </div>
+                    <button id="send" class="btn btn-default btn-block" type="submit">发送</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
