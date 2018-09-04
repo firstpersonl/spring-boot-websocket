@@ -25,6 +25,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter-security")
     compile("org.springframework.boot:spring-boot-starter-websocket")
+    compile group: 'org.springframework', name: 'spring-messaging', version: '4.3.18.RELEASE'
+    compile group: 'org.springframework.security', name: 'spring-security-messaging', version: '4.2.3.RELEASE'
     compile("org.springframework.boot:spring-boot-starter-activemq")
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 
 }

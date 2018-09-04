@@ -17,34 +17,35 @@ import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerCo
 public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/queue","/topic");
-        registry.setApplicationDestinationPrefixes("/app/");
-        registry.setUserDestinationPrefix("/user/");
+        registry.enableSimpleBroker("/secured/history");
+        registry.setApplicationDestinationPrefixes("/spring-security-mvc-socket");
+        registry.setUserDestinationPrefix("/user");
     }
 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
-        registry.addEndpoint("/webServer").setAllowedOrigins("*").withSockJS();
-        registry.addEndpoint("/orderServer").setAllowedOrigins("*").withSockJS();
+        registry.addEndpoint("/secured/chat").setAllowedOrigins("*")
+                .withSockJS();
     }
+    //使用spring security SocketSecurityConfig.class认证方式，故屏蔽以下代码
 
-    /**
-     * 配置客户端入站通道拦截器
-     */
-    @Override
-    public void configureClientInboundChannel(ChannelRegistration registration) {
-        registration.setInterceptors(createUserInterceptor());
-    }
-
-    /**
-     *
-     * @Title: createUserInterceptor
-     * @Description: 将客户端渠道拦截器加入spring ioc容器
-     * @return
-     */
-    @Bean
-    public UserInterceptor createUserInterceptor() {
-        return new UserInterceptor();
-    }
+//    /**
+//     * 配置客户端入站通道拦截器
+//     */
+//    @Override
+//    public void configureClientInboundChannel(ChannelRegistration registration) {
+//        registration.setInterceptors(createUserInterceptor());
+//    }
+//
+//    /**
+//     *
+//     * @Title: createUserInterceptor
+//     * @Description: 将客户端渠道拦截器加入spring ioc容器
+//     * @return
+//     */
+//    @Bean
+//    public UserInterceptor createUserInterceptor() {
+//        return new UserInterceptor();
+//    }
 
 }

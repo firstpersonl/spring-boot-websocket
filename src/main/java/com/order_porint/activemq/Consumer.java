@@ -21,7 +21,9 @@ public class Consumer {
     public void receiveOrderQueue(Object orderObject) {
         if (orderObject!=null) {
             System.out.println("----consumer message [order]: " + orderObject.toString());
-            messagingTemplate.convertAndSendToUser("C100C23FA","/queue/ordersQueue","message test");
+
+            //param user ==> 认证username
+            messagingTemplate.convertAndSendToUser("user1","/secured/history/ordersQueue","message test");
         }
     }
 }

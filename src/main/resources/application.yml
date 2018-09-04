@@ -5,3 +5,7 @@ spring:
     password: admin
     pool:
       enabled: false
+  thymeleaf:
+    cache: false
+    suffix: .html
+    prefix: classpath:/templates/

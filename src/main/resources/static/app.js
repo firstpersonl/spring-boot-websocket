@@ -1,17 +1,26 @@
 var stompClient = null;
-var user = null;
+var serverUrl = null;
 
 function connect() {
-    user = localStorage.getItem('Auth-Token');
-    var socket = new SockJS('/orderServer');
+    serverUrl = "/secured/chat";
+    var Auth_Token = null;
+    $.ajax({
+        url: '/csrf',
+        method: 'get',
+        async: false,
+        success: function (data) {
+            Auth_Token = data;
+        }
+    })
+    var socket = new SockJS(serverUrl);
 
     stompClient = Stomp.over(socket);
-    stompClient.connect({name:user}, function (frame) {
+    stompClient.connect({"X-CSRF-TOKEN":Auth_Token}, function (frame) {
         console.log('Connected: ' + frame);
         console.log('sessionId: '+/\/([^\/]+)\/websocket/.exec(socket._transport.url)[1]);
-        stompClient.subscribe('/user/queue/ordersQueue', function (greeting) {
-            showGreeting(JSON.parse(greeting.body));
-            console.log(greeting)
+        stompClient.subscribe('/user/secured/history/ordersQueue', function (greeting) {
+            console.log(greeting);
+            alert(greeting.body)
         });
     });
 }

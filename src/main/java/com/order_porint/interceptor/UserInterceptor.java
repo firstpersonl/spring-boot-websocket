@@ -36,17 +36,9 @@ public class UserInterceptor extends ChannelInterceptorAdapter {
                 Map sessionAttributes = SimpMessageHeaderAccessor.getSessionAttributes(message.getHeaders());
                 sessionAttributes.put(CsrfToken.class.getName(),new DefaultCsrfToken("Auth-Token","Auth-Token",jwtToken));
 
-//                SecurityContextHolder.getContext().setAuthentication(authentication);
-//                accessor.setUser(authToken);
+                accessor.setUser(SecurityContextHolder.getContext().getAuthentication());
             }
-            Object raw = message.getHeaders().get(SimpMessageHeaderAccessor.NATIVE_HEADERS);
-            if (raw instanceof Map) {
-                Object name = ((Map) raw).get("name");
-                if (name instanceof LinkedList) {
-                    // 设置当前访问器的认证用户
-                    accessor.setUser(new User(((LinkedList) name).get(0).toString()));
-                }
-            }
+
         }
         return message;
     }
