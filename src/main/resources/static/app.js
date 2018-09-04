@@ -2,7 +2,7 @@ var stompClient = null;
 var user = null;
 
 function connect() {
-    user = 'C100C23FA';
+    user = localStorage.getItem('Auth-Token');
     var socket = new SockJS('/orderServer');
 
     stompClient = Stomp.over(socket);

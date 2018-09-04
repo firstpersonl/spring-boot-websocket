@@ -11,7 +11,7 @@ import javax.jms.Destination;
 /**
  * Created by zsx on 2018-08-31.
  */
-@RequestMapping("hotelOrder")
+@RequestMapping("auth/hotelOrder")
 @RestController
 public class HotelOrderCtrl {
 
