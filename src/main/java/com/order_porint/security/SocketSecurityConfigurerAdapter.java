@@ -1,6 +1,7 @@
 package com.order_porint.security;
 
 import com.order_porint.filter.CustomFilter;
+import com.order_porint.service.impl.MyUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -16,6 +17,7 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 
 /**
  * Created by zsx on 2018-09-04.
+ *  参考于 https://www.baeldung.com/registration-with-spring-mvc-and-spring-security
  */
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
@@ -26,12 +28,17 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
     //用来解决匿名用户访问无权限资源时的异常
     @Autowired
     private MyAuthenticationEntryPoint authenticationEntryPoint;
+    @Autowired
+    private MyUserDetailsService myUserDetailsService;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("user1").password(passwordEncoder().encode("user1Pass"))
-                .authorities("ROLE_USER");
+        //内存用户
+//        auth.inMemoryAuthentication()
+//                .withUser("user1").password(passwordEncoder().encode("user1Pass"))
+//                .authorities("ROLE_USER");
+        // 自定义用户登陆校验
+        auth.userDetailsService(myUserDetailsService);
     }
 
     @Override
