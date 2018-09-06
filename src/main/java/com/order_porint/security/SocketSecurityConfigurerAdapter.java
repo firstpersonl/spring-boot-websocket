@@ -68,6 +68,7 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
                 .passwordParameter("password")
                 //登陆 表单 post路径
                 .loginProcessingUrl("/login")
+                .defaultSuccessUrl("/index")
                 .and()
                 .logout()
                 .deleteCookies("JSESSIONID", "remember-me")

@@ -33,12 +33,13 @@ public class MyUserDetailsService implements UserDetailsService {
                     "No user found with username: "+ email
             );
         }
+        //使用了邮件验证功能 enabled 标识符不会再用到
         boolean enabled = true;
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
         return new User(user.getEmail(),user.getPassword(),
-                enabled,
+                user.getEnabled(),
                 accountNonExpired,
                 credentialsNonExpired,
                 accountNonLocked,getAuthorities(user.getRoles()));

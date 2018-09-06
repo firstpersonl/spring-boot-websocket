@@ -2,11 +2,12 @@ package com.order_porint.service.impl;
 
 import com.order_porint.model.SystemUser;
 import com.order_porint.model.UserDto;
+import com.order_porint.model.VerificationToken;
 import com.order_porint.repository.SystemUserRepository;
+import com.order_porint.repository.VerificationTokenRepository;
 import com.order_porint.service.EmailExistsException;
 import com.order_porint.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class UserService implements IUserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private VerificationTokenRepository verificationTokenRepository;
 
     @Override
     public SystemUser registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
@@ -40,6 +44,27 @@ public class UserService implements IUserService {
         user.setPassword(encodedPassword);
         repository.save(user);
         return user;
+    }
+
+    @Override
+    public SystemUser getUser(String verificationToken) {
+        return verificationTokenRepository.findByToken(verificationToken).getUser();
+    }
+
+    @Override
+    public void saveRegisteredUser(SystemUser user) {
+        repository.save(user);
+    }
+
+    @Override
+    public void createVerificationToken(SystemUser user, String token) {
+        VerificationToken myToken = new VerificationToken(token, user);
+        verificationTokenRepository.save(myToken);
+    }
+
+    @Override
+    public VerificationToken getVerificationToken(String verificationToken) {
+        return verificationTokenRepository.findByToken(verificationToken);
     }
 
     private boolean emailExist(String email) {

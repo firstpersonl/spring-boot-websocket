@@ -24,7 +24,11 @@ public class SystemUser {
     private List<String> roles;
     private String role;
 
+    private boolean enabled;
+
     public SystemUser() {
+        super();
+        this.enabled = false;
     }
 
     @Column(name = "first_name")
@@ -90,5 +94,14 @@ public class SystemUser {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    @Column(name = "enabled")
+    public boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 }

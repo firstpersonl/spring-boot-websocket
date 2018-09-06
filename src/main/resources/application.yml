@@ -18,3 +18,9 @@ spring:
       ddl-auto: update
     show-sql: true
     database-platform: org.hibernate.dialect.MySQL5Dialect
+  mail:
+    host: smtp.163.com
+    username: firstpersonl@163.com
+    password: 1741diswjj
+    port: 25
+    protocol: smtp
