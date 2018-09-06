@@ -17,6 +17,7 @@ public class HotelOrderCtrl {
 
     @Autowired
     private Producer producer;
+
     private static Destination destination = new ActiveMQQueue("order.queue");
 
     @RequestMapping(value = "/addOrder",method = RequestMethod.GET)

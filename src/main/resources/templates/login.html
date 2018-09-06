@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
+<html lang="zh_CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
-
+<div style="text-align: right"><a href="?lang=en">English</a> |
+    <a href="?lang=es_ES">Spanish</a></div>
 <div>
-    <form action="authenticate" method="post">
+
+    <form th:action="@{/login}" method="post">
         <table>
             <tr>
                 <td>User:</td>
@@ -21,6 +23,7 @@
                 <td><input name="submit" type="submit" value="submit"/></td>
             </tr>
         </table>
+        <!-- 使用了 spring-security 后，默认开启了防止跨域攻击的功能，任何 POST 提交到后台的表单都要验证是否带有 _csrf 参数，一旦传来的 _csrf 参数不正确，服务器便返回 403 错误；-->
         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
     </form>
 </div>

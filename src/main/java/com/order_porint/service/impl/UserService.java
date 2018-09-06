@@ -6,6 +6,8 @@ import com.order_porint.repository.SystemUserRepository;
 import com.order_porint.service.EmailExistsException;
 import com.order_porint.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -17,6 +19,9 @@ import java.util.Arrays;
 public class UserService implements IUserService {
     @Autowired
     private SystemUserRepository repository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public SystemUser registerNewUserAccount(UserDto accountDto) throws EmailExistsException {
@@ -30,6 +35,10 @@ public class UserService implements IUserService {
         user.setLastName(accountDto.getLastName());
         user.setPassword(accountDto.getPassword());
         user.setRoles(Arrays.asList("ROLE_USER"));
+        // 加密
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+        repository.save(user);
         return user;
     }
 

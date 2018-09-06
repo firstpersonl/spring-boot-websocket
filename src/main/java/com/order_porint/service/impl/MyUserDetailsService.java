@@ -37,7 +37,7 @@ public class MyUserDetailsService implements UserDetailsService {
         boolean accountNonExpired = true;
         boolean credentialsNonExpired = true;
         boolean accountNonLocked = true;
-        return new User(user.getEmail(),user.getPassword().toLowerCase(),
+        return new User(user.getEmail(),user.getPassword(),
                 enabled,
                 accountNonExpired,
                 credentialsNonExpired,

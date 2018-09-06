@@ -23,19 +23,19 @@ public class IndexController {
     @Autowired
     private IUserService userService;
 
-    @RequestMapping(value = {"/",""})
+    @RequestMapping(value = {"/","index"})
     public String index() {
-        return "/index";
+        return "index";
     }
 
     @RequestMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/createOrder")
     public String createOrder() {
-        return "/createOrder";
+        return "createOrder";
     }
 
     @RequestMapping(value = "/user/registration", method = RequestMethod.GET)

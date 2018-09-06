@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,13 +39,22 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
 //                .withUser("user1").password(passwordEncoder().encode("user1Pass"))
 //                .authorities("ROLE_USER");
         // 自定义用户登陆校验
-        auth.userDetailsService(myUserDetailsService);
+        auth.authenticationProvider(authProvider());
+    }
+
+    @Bean
+    public DaoAuthenticationProvider authProvider() {
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        authenticationProvider.setUserDetailsService(myUserDetailsService);
+        return authenticationProvider;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.csrf().disable();
         http.authorizeRequests()
-                .antMatchers("/login/**","/signout/**","/createOrder").permitAll()
+                .antMatchers("/user/registration/**","/login/**","/logout/**").permitAll()
                 .anyRequest().authenticated()
                 .antMatchers(
                         "/secured/**/**",
@@ -56,15 +66,16 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
                 .loginPage("/login").permitAll()
                 .usernameParameter("username")
                 .passwordParameter("password")
-                .loginProcessingUrl("/authenticate")
+                //登陆 表单 post路径
+                .loginProcessingUrl("/login")
                 .and()
                 .logout()
-                .logoutUrl("/logout")
                 .deleteCookies("JSESSIONID", "remember-me")
+                .logoutUrl("/logout").permitAll()
                 .and()
                 .httpBasic()
                 .authenticationEntryPoint(authenticationEntryPoint);
-
+//自定义过滤器
         http.addFilterAfter(new CustomFilter(),
                 BasicAuthenticationFilter.class);
     }

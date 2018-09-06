@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" >
 <head>
     <title>Hello WebSocket</title>
     <meta charset="utf-8">
@@ -15,6 +15,9 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
     enabled. Please enable
     Javascript and reload this page!</h2></noscript>
+<!-- 在CSRF enabled (default), 使用 POST退出。  -->
+<div style="text-align: right"><form th:action="@{/logout}" method="post"><button type="submit"><span>logout</span></button></form><a href="?lang=en">English</a> |
+    <a href="?lang=es_ES">Spanish</a></div>
 <div id="main-content" class="container">
     <div class="row">
         <div class="col-md-6">

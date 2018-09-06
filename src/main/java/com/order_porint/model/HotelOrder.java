@@ -1,12 +1,13 @@
 package com.order_porint.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by zsx on 2018-08-31.
  * testing order model
  */
-public class HotelOrder {
+public class HotelOrder implements Serializable {
     private String orderId;
     private String username;
     private String userPhone;

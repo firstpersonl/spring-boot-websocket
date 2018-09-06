@@ -8,12 +8,11 @@ spring:
   thymeleaf:
     cache: false
     suffix: .html
-    prefix: classpath:/templates/
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/springweb?useUnicode=true&characterEncoding=utf-8&useSSL=false
-    name: root
-    password: 'root'
+    url: jdbc:mysql://127.0.0.1:3306/springweb
+    password: 123456
+    username: spring
   jpa:
     hibernate:
       ddl-auto: update
