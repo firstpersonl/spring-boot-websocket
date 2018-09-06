@@ -8,19 +8,8 @@ spring:
   thymeleaf:
     cache: false
     suffix: .html
-  datasource:
-    driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/springweb
-    password: 123456
-    username: spring
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-    database-platform: org.hibernate.dialect.MySQL5Dialect
   mail:
     host: smtp.163.com
     username: firstpersonl@163.com
     password: 1741diswjj
     port: 25
-    protocol: smtp

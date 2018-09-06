@@ -1,0 +1,25 @@
+spring:
+  activemq:
+    broker-url: tcp://localhost:61616
+    user: admin
+    password: admin
+    pool:
+      enabled: false
+  thymeleaf:
+    cache: false
+    suffix: .html
+  mail:
+    host: smtp.163.com
+    username: firstpersonl@163.com
+    password: 1741diswjj
+    port: 25
+  datasource:
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@//localhost:1521/orcl
+    username: spring
+    password: spring123
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.Oracle10gDialect
