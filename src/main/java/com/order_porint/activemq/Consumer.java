@@ -29,7 +29,7 @@ public class Consumer {
 
             //String loginUserName = SecurityContextHolder.getContext().getAuthentication().getName();
             //param user ==> 认证username
-            messagingTemplate.convertAndSendToUser("first@163.com","/secured/history/ordersQueue",orderObject);
+            messagingTemplate.convertAndSendToUser("first@163.com","/secured/history/ordersQueue","里有一个新的订单");
         }
     }
 }

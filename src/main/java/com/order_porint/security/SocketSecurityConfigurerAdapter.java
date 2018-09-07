@@ -14,7 +14,10 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import javax.sql.DataSource;
 
 /**
  * Created by zsx on 2018-09-04.
@@ -31,6 +34,8 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
     private MyAuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
     private MyUserDetailsService myUserDetailsService;
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -70,6 +75,12 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
                 .loginProcessingUrl("/login")
                 .defaultSuccessUrl("/index")
                 .and()
+                .rememberMe()
+                .key("uniqueAndSecret")
+                .userDetailsService(myUserDetailsService)
+                .tokenValiditySeconds(604800)
+                .tokenRepository(tokenRepository())
+                .and()
                 .logout()
                 .deleteCookies("JSESSIONID", "remember-me")
                 .logoutUrl("/logout").permitAll()
@@ -84,5 +95,14 @@ public class SocketSecurityConfigurerAdapter extends WebSecurityConfigurerAdapte
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public JdbcTokenRepositoryImpl tokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        //第一次启动时开启，自动建表
+        //tokenRepository.setCreateTableOnStartup(true);
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
     }
 }

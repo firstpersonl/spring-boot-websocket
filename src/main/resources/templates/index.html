@@ -57,5 +57,11 @@
         </div>
     </div>
 </div>
+<script>
+    Notification.requestPermission().then(function(result) {
+        // result可能是是granted, denied, 或default.
+        console.log(result)
+    });
+</script>
 </body>
 </html>
